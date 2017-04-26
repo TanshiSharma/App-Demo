@@ -1,0 +1,103 @@
+{%extends "base.html" %}
+{% load static %}
+{%block title %}
+    <title>Page Posts</title>
+{% endblock %}
+{%block scripts %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.14/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.9.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="{% static "js/page-posts.js" %}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{%endblock%}
+
+{%block navigation %}
+        <nav>
+            <a href="{% url "list-pages" %}">Page List > </a>
+            <a href="#" class="selected">{{page_name}}</a>
+            <a href="http://www.facebook.com/{{page_id}}" target="_blank">(Open With Facebook)</a>
+        </nav>
+{% endblock %}
+
+{% block content %}
+<div class="row" style="margin-top:20px" id="top_posts_view">
+
+    <div class="col-md-5" ><div id="graph_container"></div></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-4" id ="top_post"></div>
+    <div class="col-md-1"></div>
+</div>
+<div style="margin-top:40px">
+<div class="container">
+<table id="posts"  style="width: auto;" class="table table-striped table-bordered table-condensed"  cellspacing="0">
+
+    <thead>
+        <tr>
+            <th width="70%">Message</th>
+            <th width = "20%">Created On</th>
+            <th width="5%">Impressions</th>
+            <th width="5%">Type</th>
+        </tr>
+    </thead>
+</table>
+</div>
+</div>
+
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#create_post">Create Post</button>
+<div class="modal fade" id="create_post" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create a Post</h4>
+        </div>
+          <form role="form" method="post" action="{% url "save-post" %}">
+              {% csrf_token %}
+           <div class="modal-body">
+
+
+                  <div class="form-group">
+                    <label for="newpost"></label>
+                      <input type="text" class="form-control"
+                      id="newpost" name="post-message" placeholder="What's on your mind?"/>
+                  </div>
+
+                  <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="publish-check"/> Publish!
+                    </label>
+
+                  </div>
+               <p> For advanced posting options, please visit the <a href="http://www.facebook.com/{{page_id}}" target="_blank">Page</a> </p>
+
+            </div>
+              <input type="hidden" name="page_id_post" value="{{ page_id }}"/>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                            Close
+                </button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+
+      </div>
+
+    </div>
+</div>
+
+
+
+<input type="hidden" id="next_url" value=""/>
+<input type="hidden" id="unpublished_url" value=""/>
+<input type="hidden" id="skip_unpublished" value="False"/>
+<input type="hidden" id="page-id" value="{{ page_id }}"/>
+{%endblock%}

@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% block title %}
+	<title>Pages</title>
+	{%endblock %}
+	<link rel="stylesheet" href="{% static "css/demo.css" %}">
+	<link rel="stylesheet" href="{% static "css/header-second-bar.css" %}">
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	{%block scripts %}
+	{% endblock %}
+</head>
+
+<body>
+
+<header class="header-two-bars">
+
+	<div class="header-first-bar">
+
+		<div class="header-limiter">
+
+			<h1><a href="{% url 'page_insight_home'%}">Page<span>Insights</span></a></h1>
+			{%block navigation %}
+			<nav>
+				<a href="#">Page List ></a>
+				<a href="#" class="selected">pageName</a>
+			</nav>
+			{%endblock %}
+			<a href="{% url 'auth_logout' %}?next={% url "page_insight_home" %}" class="logout-button">Logout</a>
+		</div>
+
+	</div>
+</header>
+
+<!-- The content of your page would go here. -->
+{%block content%}
+{%endblock%}
+
+</body>
+
+</html>

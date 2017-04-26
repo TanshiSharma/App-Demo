@@ -1,0 +1,39 @@
+{%extends "base.html" %}
+{% load static %}
+{%block title %}
+<title>Page Listing</title>
+{% endblock %}
+
+{%block scripts %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.14/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+{%endblock%}
+
+
+{%block navigation %}
+        <nav>
+            <a href="{% url "list-pages" %}" class="selected">Page List</a>
+        </nav>
+{% endblock %}
+
+{%block content%}
+
+<div style="margin-top:200px;" align="center">
+
+<table style="width:30%;" class="table table-striped table-bordered table-condensed">
+        <caption><b>Your Pages<b/></caption>
+        <tr>
+            <th class="text-center"> Page Name </th>
+            <th  class="text-center"> Category </th>
+        </tr>
+
+    {% for entry in page_info_list %}
+        <tr>
+            <td> <a href="{% url 'page-posts' entry.id %}?pname={{entry.name}} "> {{ entry.name }}</a></td>
+            <td> {{ entry.category }}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+</div>
+{%endblock %}
